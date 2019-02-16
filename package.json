@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/index.js",
   "bin": {
-    "hexlet": "dist/bin/hexlet.js"
+    "hexlet": "dist/bin/dirFilter.js"
   },
   "engines": {
     "node": ">=8"

@@ -1,4 +1,4 @@
 import 'source-map-support/register';
-import half from './half';
+import dirFilter from './dirFilter';
 
-export default half;
+export default dirFilter;
