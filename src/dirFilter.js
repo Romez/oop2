@@ -1,5 +1,15 @@
 import fs from 'fs';
 
+class PipeData {
+  constructor(data) {
+    this.data = data;
+  }
+
+  pipe(fn) {
+    return new PipeData(fn(this.data));
+  }
+}
+
 export default () => {
   const fileNames = fs.readdirSync('.');
 
@@ -12,11 +22,11 @@ export default () => {
   const plural = char => name => [name, char].join('');
   const toUpperCase = name => name.toUpperCase();
 
-  fileNames
-  |> withoutDot
-  |> sortNames
-  |> middle
-  |> plural('s')
-  |> toUpperCase
-  |> console.log;
+  (new PipeData(fileNames))
+    .pipe(withoutDot)
+    .pipe(sortNames)
+    .pipe(middle)
+    .pipe(plural('s'))
+    .pipe(toUpperCase)
+    .pipe(console.log);
 };
