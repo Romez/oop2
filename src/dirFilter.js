@@ -5,28 +5,46 @@ class PipeData {
     this.data = data;
   }
 
-  pipe(fn) {
-    return new PipeData(fn(this.data));
+  withoutDot() {
+    this.data = this.data.filter(fileName => !fileName.startsWith('.'));
+    return this;
+  }
+
+  sortNames() {
+    this.data.sort();
+    return this;
+  }
+
+  print() {
+    console.log(this.data);
+    return this;
+  }
+
+  middle() {
+    const middleIndex = Math.round(this.data.length / 2);
+    this.data = this.data[middleIndex];
+    return this;
+  }
+
+  plural(char) {
+    this.data = [this.data, char].join('');
+    return this;
+  }
+
+  toUpperCase() {
+    this.data = this.data.toUpperCase();
+    return this;
   }
 }
 
 export default () => {
   const fileNames = fs.readdirSync('.');
 
-  const withoutDot = names => names.filter(fileName => !fileName.startsWith('.'));
-  const sortNames = names => names.sort();
-  const middle = (names) => {
-    const middleIndex = Math.round(names.length / 2);
-    return names[middleIndex];
-  };
-  const plural = char => name => [name, char].join('');
-  const toUpperCase = name => name.toUpperCase();
-
   (new PipeData(fileNames))
-    .pipe(withoutDot)
-    .pipe(sortNames)
-    .pipe(middle)
-    .pipe(plural('s'))
-    .pipe(toUpperCase)
-    .pipe(console.log);
+    .withoutDot()
+    .sortNames()
+    .middle()
+    .plural('s')
+    .toUpperCase()
+    .print();
 };
